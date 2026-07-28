@@ -1,0 +1,86 @@
+============================================================
+  ARIA — Rule-Based AI Chatbot | Chat Log
+  Session Started : 2026-07-21 03:57:38 PM
+============================================================
+
+[15:59:00] [EXACT]
+  USER : hello
+  ARIA : Hello! I'm ARIA (Automated Rule-based Intelligence Assistant). How can I help you today?
+
+[15:59:29] [EXACT]
+  USER : HELLO
+  ARIA : Hello! I'm ARIA (Automated Rule-based Intelligence Assistant). How can I help you today?
+
+[15:59:56] [EXACT]
+  USER :  hello 
+  ARIA : Hello! I'm ARIA (Automated Rule-based Intelligence Assistant). How can I help you today?
+
+[16:00:18] [EXACT]
+  USER : Hello!!!
+  ARIA : Hello! I'm ARIA (Automated Rule-based Intelligence Assistant). How can I help you today?
+
+[16:00:36] [KEYWORD]
+  USER : I feel happy today
+  ARIA : Happiness detected! That's the best runtime environment to be in. 😊
+
+[16:01:10] [EXACT]
+  USER : what is ai
+  ARIA : AI (Artificial Intelligence) is the simulation of human intelligence by machines — enabling them to learn, reason, and solve problems.
+
+[16:01:33] [SYSTEM]
+  USER : time
+  ARIA : The current time is: 04:01:33 PM
+
+[16:01:53] [SYSTEM]
+  USER : date
+  ARIA : Today's date is: Tuesday, July 21, 2026
+
+[16:02:03] [SYSTEM]
+  USER : what is the date today?
+  ARIA : Today's date is: Tuesday, July 21, 2026
+
+[16:02:31] [SYSTEM]
+  USER : clear
+  ARIA : Screen cleared! Fresh start. 🧹
+
+[16:02:52] [EXACT]
+  USER : joke
+  ARIA : Why do programmers prefer dark mode?
+   → Because light attracts bugs! 🐛😄
+
+[16:03:14] [KEYWORD]
+  USER : tell me something random
+  ARIA : Hi! Noticed that greeting in your message. What's up?
+
+[16:03:39] [EXACT]
+  USER : help
+  ARIA : Sure! Here's what you can ask me:
+   → Greetings (hello, hi, hey)
+   → About me (who are you, what can you do)
+   → Fun stuff (joke, fun fact, quote)
+   → Utility (time, date)
+   → Just chat! Type 'quit' or 'exit' to leave.
+
+[16:04:50] [EXACT]
+  USER : about
+  ARIA : ARIA v1.0 | Rule-Based AI Chatbot
+Built for DecodeLabs AI Internship — Project 1
+Architecture: IPO Model (Input → Process → Output)
+Lookup: O(1) Dictionary Hashing
+Developed with Python 3.14
+
+[16:05:51] [SYSTEM]
+  USER : quit
+  ARIA : Goodbye! It was great chatting. Keep building great things! 🚀👋
+
+
+============================================================
+  SESSION SUMMARY
+============================================================
+  Total Messages    : 14
+  Exact Matches     : 8
+  Keyword Matches   : 2
+  Fallbacks         : 0
+  Session Duration  : 8m 12s
+  Session Ended     : 2026-07-21 04:05:51 PM
+============================================================
