@@ -239,7 +239,6 @@ Google Colab
 ```
 
 ---
-
 ## 📁 Project 3 — AI Recommendation Logic
 
 <div align="center">
@@ -247,29 +246,31 @@ Google Colab
 ![Project3](https://img.shields.io/badge/Type-Recommendation%20Engine-purple?style=flat-square)
 ![Tool](https://img.shields.io/badge/Tool-Google%20Colab-F9AB00?style=flat-square&logo=google-colab)
 ![Algorithm](https://img.shields.io/badge/Algorithm-Cosine%20Similarity-red?style=flat-square)
-![Roles](https://img.shields.io/badge/Job%20Roles-15-blue?style=flat-square)
-![Skills](https://img.shields.io/badge/Unique%20Skills-40+-green?style=flat-square)
+![Dataset](https://img.shields.io/badge/Dataset-1000%20Candidates-blue?style=flat-square)
+![Roles](https://img.shields.io/badge/Job%20Roles-20+-orange?style=flat-square)
 
 </div>
 
 ### 🎯 Goal
-Build a **Tech Stack Recommender** — a content-based filtering engine that maps a user's raw skills to the most relevant tech career paths using TF-IDF vectorization and Cosine Similarity. The same foundational logic powering recommendation engines at Netflix, Amazon, and Spotify.
+Build a **Tech Stack Recommender** — a content-based filtering engine that maps a user's raw skills to the most relevant tech career paths using TF-IDF vectorization and Cosine Similarity. Role profiles are **learned from 1000 real candidate records** in `candidate_job_role_dataset.csv`. The same foundational logic powering recommendation engines at Netflix, Amazon, and Spotify.
 
 ### 🏗️ Architecture
 ```
-INPUT   →  User Skills (min 3 recommended)
-            Vocabulary normalization (spaces → underscores)
+INPUT   →  candidate_job_role_dataset.csv (1000 candidates | 20+ roles)
+            Skills aggregated per role → rich role profile per job title
+            User skills normalized (spaces → underscores)
             TF-IDF vectorization using pre-fitted vocabulary space
             ↓
 PROCESS →  4-Step Ranking Pipeline:
             Step 1: Ingestion  → Capture & clean user skills → vector
-            Step 2: Scoring    → Cosine Similarity vs all 15 role vectors
+            Step 2: Scoring    → Cosine Similarity vs all 20+ role vectors
             Step 3: Sorting    → Rank all roles by score descending
             Step 4: Filtering  → Truncate to Top-N (prevents choice overload)
             ↓
 OUTPUT  →  Ranked career recommendations with similarity scores
+            Experience level filter (Entry / Mid / Senior)
             Skill gap analysis (matched / missing / bonus skills)
-            Cold start fallback (trending roles for empty profiles)
+            Cold start fallback (popular roles for empty profiles)
             Multi-user side-by-side comparison visualization
 ```
 
@@ -278,62 +279,64 @@ OUTPUT  →  Ranked career recommendations with similarity scores
 |---|---|
 | Take user input (min 3) | Onboarding ingestion with vocabulary normalization |
 | Match using similarity logic | Cosine Similarity — magnitude-invariant, industry standard |
-| Display recommended items | Top-N ranked list with scores, salaries, descriptions |
-| Content-based filtering | TF-IDF on 15 job roles × 40+ unique skills |
-| Cold start handling | Trending fallback — no crash on empty input |
+| Display recommended items | Top-N ranked list with scores and candidate counts |
+| Content-based filtering | TF-IDF on 20+ roles learned from 1000 real candidates |
+| Cold start handling | Popular roles fallback — no crash on empty input |
 
 ### 🔑 Professional Features Built
-- **TF-IDF over binary matching** — penalizes generic skills (python, git) that appear everywhere, rewards specific ones (kubernetes, nlp, opencv) — directly implements the slides' "penalize generic, reward specific" principle
-- **Cosine Similarity over Euclidean** — explicitly chosen because Euclidean is magnitude-sensitive (a role with 15 skills listed always appears "farther" than one with 5, even if perfectly matched); Cosine measures only angular alignment
+- **Real dataset** — role profiles built by aggregating 1000 real candidate records from `candidate_job_role_dataset.csv`, not manually hardcoded
+- **TF-IDF over binary matching** — penalizes generic skills (python, sql, javascript) appearing across many roles, rewards specific ones (solidity, siem, unreal_engine) — mathematically derived weights, not guessed
+- **Cosine Similarity over Euclidean** — explicitly chosen because Euclidean is magnitude-sensitive; a role profile built from 50 candidates will always have a larger vector than one from 10, making it seem artificially closer. Cosine measures angular alignment only
 - **4-step pipeline** — Ingestion → Scoring → Sorting → Filtering, exactly as specified in slides
-- **15 job roles across 4 categories:**
-  - Data & AI: Data Scientist, ML Engineer, AI Research Scientist, Data Analyst, Data Engineer
-  - Development: Backend, Frontend, Full Stack, Mobile App Developer
-  - Infrastructure: DevOps Engineer, Cloud Architect, Cybersecurity Analyst, MLOps Engineer
-  - Specialized AI: NLP Engineer, Computer Vision Engineer
-- **40+ unique skills vocabulary** — shared space across all roles and user profiles
-- **Skill Gap Analyzer** — for any role shows: ✅ skills you have, ❌ skills to learn, 💡 bonus skills you bring
-- **Cold Start Handler** — graceful trending fallback when user provides no skills, no crash
+- **Experience level filter** — recommendations can be filtered by Entry / Mid / Senior derived from real candidate data
+- **20+ real job roles** including: Data Scientist, AIML Engineer, Frontend Developer, Backend Developer, Full Stack Python/Java Developer, DevOps Engineer, Kubernetes Operations Engineer, Cybersecurity Engineer, Mobile Developer, Blockchain Developer, Data Analyst, Designer, Web Developer, Game Developer, Software Project Manager, and more
+- **Skill vocabulary extracted automatically** — unique skills discovered from the dataset, not pre-defined
+- **Skill Gap Analyzer** — gaps calculated from real candidate data: ✅ skills you have, ❌ skills to learn, 💡 bonus skills you bring
+- **Cold Start Handler** — falls back to most popular roles by candidate count, no crash, no zero-vector error
 - **Multi-user comparison chart** — side-by-side visualization proving same engine gives completely different outputs for different profiles
-- **TF-IDF heatmap** — shows which skills are most distinctive per role (darker = more specific)
-- **Salary information** — each recommended role includes average monthly salary range
+- **TF-IDF heatmap** — shows which skills are most distinctive per role learned from real data (darker = more role-specific)
+- **Role distribution chart** — EDA visualization showing candidate count per job role from the dataset
 - **Vocabulary rule enforced** — underscores for multi-word skills (`machine_learning` not `machine learning`) to prevent vocabulary mismatch failures
-- **"Why this recommendation?" transparency** — every output explains which skills triggered the match
 
-### 🗂️ Knowledge Base
+### 🗂️ Dataset
 ```
-15 Job Roles  |  4 Categories  |  40+ Unique Skills
+File    : candidate_job_role_dataset.csv
+Records : 1000 real candidates
+Columns : candidate_id | skills | qualification | experience_level | job_role
+Roles   : 20+ unique job titles
+Skills  : Extracted automatically via TF-IDF vocabulary
 
-Categories:
-  Data & AI        →  5 roles
-  Development      →  4 roles
-  Infrastructure   →  4 roles
-  Specialized AI   →  2 roles
+Sample Roles:
+  Data Scientist, AIML Engineer, Frontend Developer,
+  Backend Developer, DevOps Engineer, Blockchain Developer,
+  Cybersecurity Engineer, Mobile Developer, Data Analyst,
+  Kubernetes Operations Engineer, Game Developer...
 
-Sample Skills Vocabulary:
-  python, sql, machine_learning, deep_learning, tensorflow,
-  pytorch, docker, kubernetes, aws, nlp, computer_vision,
-  react, nodejs, javascript, flutter, spark, airflow, etl,
-  security, networking, penetration_testing, terraform...
+Sample Skills Vocabulary (auto-extracted):
+  python, sql, machine_learning, tensorflow, deep_learning,
+  javascript, react, html, css, node.js, docker, kubernetes,
+  aws, linux, java, kotlin, swift, ios_development,
+  penetration_testing, solidity, ethereum, blockchain,
+  agile, scrum, figma, ui/ux_design, nlp, data_analysis...
 ```
 
 ### 🎯 Sample Output
 ```
-  Input Skills: python, machine_learning, sql, tensorflow, data_analysis
+  Input Skills: Python, Machine Learning, SQL, TensorFlow, NLP
 
-  #1  Data Scientist          [Data & AI]       → 84.3% match
-  #2  ML Engineer             [Data & AI]       → 79.1% match
-  #3  AI Research Scientist   [Specialized AI]  → 71.6% match
-  #4  Data Engineer           [Data & AI]       → 58.2% match
-  #5  MLOps Engineer          [Infrastructure]  → 52.4% match
+  #1  Data Scientist     → 89.2% match  (50 real candidates)
+  #2  AIML               → 81.4% match  (45 real candidates)
+  #3  Data Analyst       → 64.3% match  (48 real candidates)
+  #4  Full Stack Python  → 51.7% match  (47 real candidates)
+  #5  Backend Developer  → 38.2% match  (50 real candidates)
 
-  ── Skill Gap: Data Scientist ──────────────────────────────
-  ✅ You Have  (5): python, sql, machine_learning,
-                    tensorflow, data_analysis
-  ❌ To Learn  (7): statistics, pandas, numpy,
-                    data_visualization, jupyter,
-                    deep_learning, regression
-  Coverage: 41.7% → 58.3% gap to close
+  ── Skill Gap: Data Scientist (from real candidate data) ────
+  ✅ You Have  : python, sql, machine_learning,
+                 tensorflow, nlp
+  ❌ To Learn  : pandas, statistics, data_visualization,
+                 deep_learning, keras, r
+  💡 Bonus     : nlp (adds value beyond base requirements)
+  Coverage: 45.0% → 55.0% gap to close
   ───────────────────────────────────────────────────────────
 ```
 
@@ -341,7 +344,9 @@ Sample Skills Vocabulary:
 ```
 Python   Scikit-learn (TfidfVectorizer + cosine_similarity)
 Pandas   NumPy   Matplotlib   Seaborn   Google Colab
+Dataset: candidate_job_role_dataset.csv
 ```
+
 
 ---
 
